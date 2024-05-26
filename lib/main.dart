@@ -13,32 +13,32 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, //отсутствие знака debug в правом верхнем углу
       theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true, //в положении false заголовок Поиск продуктов станет белым
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue), //подсветка поля для ввода и курсора
       ),
       home: const SearchPage(),
     );
   }
 }
 //models
-class ProductModel {
-  final int id;
-  final String title;
-  final String description;
-  final int price;
-  final double discountPercentage;
-  final double rating;
-  final int stock;
-  final String brand;
-  final String category;
-  final String thumbnail;
+class ProductModel { //создание класса продукт. У продукта есть:
+  final int id;  //id, название
+  final String title;  //название
+  final String description; //описание
+  final int price; //цена
+  final double discountPercentage; //величина скидки
+  final double rating; //рейтинг
+  final int stock; //сколько на складе осталось
+  final String brand; //марка
+  final String category; //категория
+  final String thumbnail; //миниатюра (картинка)
   final List<String> images;
   // final List<String> images;
 
   ProductModel({
-    required this.id,
+    required this.id, //в конструкторе инициализируем поля 1 раз (Основное отличие между final и const в Dart заключается в том, что final обозначает переменную, значение которой не может быть изменено после инициализации, в то время как const обозначает переменную, значение которой известно во время компиляции и не может быть изменено во время выполнения.)
     required this.title,
     required this.description,
     required this.price,
@@ -51,7 +51,7 @@ class ProductModel {
     required this.images,
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) {
+  factory ProductModel.fromJson(Map<String, dynamic> json) { //метод, который берёт значения из json и записывает в экземпляр класса
     return ProductModel(
       id: json['id'] as int,
       title: json['title'] as String,
@@ -69,9 +69,9 @@ class ProductModel {
 }
 
 class ProductsModel {
-  final List<ProductModel> products;
+  final List<ProductModel> products; //класс, явл списком продуктов (товаров)
 
-  ProductsModel({required this.products});
+  ProductsModel({required this.products}); //конструктор
 
   factory ProductsModel.fromJson(Map<String, dynamic> json) {
     return ProductsModel(
@@ -82,9 +82,9 @@ class ProductsModel {
 }
 
 //pages
-enum SearchStatus { initial, loading, success, failure }
+enum SearchStatus { initial, loading, success, failure }// список состояний при загрузке страницы инициализация, загрузка, успех, ошибка
 
-class SearchPage extends StatefulWidget {
+class SearchPage extends StatefulWidget { //класс страницы поиска (динамичный виджет)
   const SearchPage({super.key});
 
   @override
@@ -92,18 +92,18 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  late final Dio _dio;
-  SearchStatus _searchStatus = SearchStatus.initial;
+  late final Dio _dio; //используем dio  для работы с json
+  SearchStatus _searchStatus = SearchStatus.initial; //статус поиска инициализация
   List<ProductModel> products = [];
 
   @override
   initState() {
-    _dio = Dio();
+    _dio = Dio(); //создаём объект класса dio
     super.initState();
   }
 
-  Future<void> searchProducts(String searchValue) async {
-    if (searchValue.isEmpty) {
+  Future<void> searchProducts(String searchValue) async { //поиск продукта
+    if (searchValue.isEmpty) { //если ничего не ввели
       setState(() {
         _searchStatus = SearchStatus.initial;
       });
@@ -112,16 +112,16 @@ class _SearchPageState extends State<SearchPage> {
     setState(() {
       _searchStatus = SearchStatus.loading;
     });
-
+//если ввели
     try {
       final result = await _dio.get('https://dummyjson.com/products/search?q=$searchValue');
       setState(() {
-        products = ProductsModel.fromJson(result.data as Map<String, dynamic>).products;
-        _searchStatus = SearchStatus.success;
+        products = ProductsModel.fromJson(result.data as Map<String, dynamic>).products; //должен выпасть список продуктов, соотв поиску
+        _searchStatus = SearchStatus.success; //успешно найден
       });
     } catch (error) {
       setState(() {
-        _searchStatus = SearchStatus.failure;
+        _searchStatus = SearchStatus.failure; //ошибка
       });
     }
   }
@@ -131,20 +131,20 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: const Text('Поиск продуктов'),
+        title: const Text('Поиск продуктов'),//верхняя синяя часть (шапка) Поиск продуктов
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
+        padding: const EdgeInsets.all(8.0), //внутренний отступ
+        child: Column( //столбец
           children: [
             TextField(
-              onChanged: (value) => searchProducts(value),
+              onChanged: (value) => searchProducts(value), //продукт
               decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
             ),
             const SizedBox(
-              height: 8,
+              height: 8, //пустое пространство высотой 8
             ),
-            Expanded(child: Builder(builder: (context) {
+            Expanded(child: Builder(builder: (context) { //занимает оставшееся пространство
               switch (_searchStatus) {
                 case SearchStatus.initial:
                   return const Center(child: Text('Начните поиск'));
