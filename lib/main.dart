@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
+//models
 class ProductModel {
   final int id;
   final String title;
@@ -81,7 +81,7 @@ class ProductsModel {
   }
 }
 
-
+//pages
 enum SearchStatus { initial, loading, success, failure }
 
 class SearchPage extends StatefulWidget {
@@ -166,7 +166,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 }
 
-
+//widgets
 class ListItem extends StatelessWidget {
   final ProductModel product;
   const ListItem({super.key, required this.product});
