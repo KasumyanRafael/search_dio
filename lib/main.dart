@@ -28,13 +28,13 @@ class ProductModel { //создание класса продукт. У прод
   final String title;  //название
   final String description; //описание
   final int price; //цена
-  final double discountPercentage; //величина скидки
-  final double rating; //рейтинг
-  final int stock; //сколько на складе осталось
-  final String brand; //марка
-  final String category; //категория
-  final String thumbnail; //миниатюра (картинка)
-  final List<String> images;
+  // final double discountPercentage; //величина скидки
+  // final double rating; //рейтинг
+  // final int stock; //сколько на складе осталось
+  // final String brand; //марка
+  // final String category; //категория
+  // final String thumbnail; //миниатюра (картинка)
+  // final List<String> images;
   // final List<String> images;
 
   ProductModel({
@@ -42,13 +42,13 @@ class ProductModel { //создание класса продукт. У прод
     required this.title,
     required this.description,
     required this.price,
-    required this.discountPercentage,
-    required this.rating,
-    required this.stock,
-    required this.brand,
-    required this.category,
-    required this.thumbnail,
-    required this.images,
+    // required this.discountPercentage,
+    // required this.rating,
+    // required this.stock,
+    // required this.brand,
+    // required this.category,
+    // required this.thumbnail,
+    // required this.images,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) { //метод, который берёт значения из json и записывает в экземпляр класса
@@ -57,13 +57,13 @@ class ProductModel { //создание класса продукт. У прод
       title: json['title'] as String,
       description: json['description'] as String,
       price: json['price'] as int,
-      discountPercentage: (json['discountPercentage'] as num).toDouble(),
-      rating: (json['rating'] as num).toDouble(),
-      stock: json['stock'] as int,
-      brand: json['brand'] as String,
-      category: json['category'] as String,
-      thumbnail: json['thumbnail'] as String,
-      images: (json['images'] as List<dynamic>).map((e) => e as String).toList(),
+      // discountPercentage: (json['discountPercentage'] as num).toDouble(),
+      // rating: (json['rating'] as num).toDouble(),
+      // stock: json['stock'] as int,
+      // brand: json['brand'] as String,
+      // category: json['category'] as String,
+      // thumbnail: json['thumbnail'] as String,
+      // images: (json['images'] as List<dynamic>).map((e) => e as String).toList(),
     );
   }
 }
@@ -179,10 +179,11 @@ class ListItem extends StatelessWidget {
       height: 200,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          image: DecorationImage(
-              image: NetworkImage(product.thumbnail),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken))),
+          // image: DecorationImage(
+          //     image: NetworkImage(product.thumbnail),
+          //     fit: BoxFit.cover,
+          //     colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken))
+              ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
